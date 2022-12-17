@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apius", "Apius\Apius.csproj", "{CA120562-96B8-495D-BC62-3E7472455ECB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA120562-96B8-495D-BC62-3E7472455ECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA120562-96B8-495D-BC62-3E7472455ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA120562-96B8-495D-BC62-3E7472455ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA120562-96B8-495D-BC62-3E7472455ECB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {168D589E-BDAE-41EE-8432-96A1DB641C3C}
+	EndGlobalSection
+EndGlobal
