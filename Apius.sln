@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apius", "Apius\Apius.csproj", "{CA120562-96B8-495D-BC62-3E7472455ECB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tederean.Apius", "Tederean.Apius\Tederean.Apius.csproj", "{85B5E44C-BAED-4A4C-A3A8-EE5C2AB873D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tederean.Apius.Core", "Tederean.Apius.Core\Tederean.Apius.Core.csproj", "{97B7247E-503A-41CB-9F68-43E40B07937C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CA120562-96B8-495D-BC62-3E7472455ECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA120562-96B8-495D-BC62-3E7472455ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA120562-96B8-495D-BC62-3E7472455ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA120562-96B8-495D-BC62-3E7472455ECB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85B5E44C-BAED-4A4C-A3A8-EE5C2AB873D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85B5E44C-BAED-4A4C-A3A8-EE5C2AB873D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85B5E44C-BAED-4A4C-A3A8-EE5C2AB873D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85B5E44C-BAED-4A4C-A3A8-EE5C2AB873D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97B7247E-503A-41CB-9F68-43E40B07937C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97B7247E-503A-41CB-9F68-43E40B07937C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97B7247E-503A-41CB-9F68-43E40B07937C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97B7247E-503A-41CB-9F68-43E40B07937C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
