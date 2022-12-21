@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Tederean.Apius.Gauge"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tederean.Apius"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="20"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <Label Grid.Row="0" x:Name="_titleText" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+    
+    <Grid Grid.Row="1" x:Name="_gaugeGrid">
+
+      <Path Stroke="DarkGray" StrokeThickness="14">
+        <Path.Data>
+          <GeometryGroup FillRule="EvenOdd">
+            <EllipseGeometry x:Name="_backgroundEllipseStart"/>
+            <PathGeometry>
+              <PathFigure x:Name="_backgroundPathFigure">
+                <ArcSegment x:Name="_backgroundArcSegment" SweepDirection="Clockwise"/>
+              </PathFigure>
+            </PathGeometry>
+            <EllipseGeometry x:Name="_backgroundEllipseEnd"/>
+          </GeometryGroup>
+        </Path.Data>
+      </Path>
+
+      <Path Stroke="Orange" StrokeThickness="14">
+        <Path.Data>
+          <GeometryGroup FillRule="EvenOdd">
+            <EllipseGeometry x:Name="_foregroundEllipseStart"/>
+            <PathGeometry>
+              <PathFigure x:Name="_foregroundPathFigure">
+                <ArcSegment x:Name="_foregroundArcSegment" SweepDirection="Clockwise"/>
+              </PathFigure>
+            </PathGeometry>
+            <EllipseGeometry x:Name="_foregroundEllipseEnd"/>
+          </GeometryGroup>
+        </Path.Data>
+      </Path>
+
+      <Label x:Name="_valueText" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="32" FontWeight="Bold" Foreground="LightGray"/>
+
+    </Grid>
+    
+  </Grid>
+</UserControl>

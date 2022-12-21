@@ -37,7 +37,7 @@
         unitCounter++;
       }
 
-      while (value < 0.995)
+      while (value < 0.995 && value > 0.0)
       {
         value *= 1000.0;
         unitCounter--;
