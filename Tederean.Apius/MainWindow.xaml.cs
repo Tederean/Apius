@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Tederean.Apius
 {
@@ -38,6 +39,16 @@ namespace Tederean.Apius
       _mainWindowViewModel.OnClosed();
 
       _taskCompletionSource.SetResult();
+    }
+
+    protected override void OnMouseDown(MouseButtonEventArgs args)
+    {
+      base.OnMouseDown(args);
+
+      if (args.ChangedButton == MouseButton.Left)
+      {
+        DragMove();
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Tederean.Apius
@@ -23,9 +24,11 @@ namespace Tederean.Apius
 
     public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(double?), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
 
-    public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title), typeof(string), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
+    public static readonly DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon), typeof(Geometry), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
 
     public static readonly DependencyProperty FormatterProperty = DependencyProperty.Register(nameof(Formatter), typeof(Func<double?, string>), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
+
+    public static readonly DependencyProperty GaugeColorProperty = DependencyProperty.Register(nameof(GaugeColor), typeof(Color?), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
 
     private static readonly DependencyProperty IntermediateValueProperty = DependencyProperty.Register(nameof(IntermediateValue), typeof(double), typeof(Gauge), new PropertyMetadata(0.0D, OnPropertyChanged));
 
@@ -49,16 +52,22 @@ namespace Tederean.Apius
       set => SetValue(ValueProperty, value);
     }
 
-    public string? Title
+    public Geometry? Icon
     {
-      get => (string?)GetValue(TitleProperty);
-      set => SetValue(TitleProperty, value);
+      get => (Geometry?)GetValue(IconProperty);
+      set => SetValue(IconProperty, value);
     }
 
     public Func<double?, string>? Formatter
     {
       get => (Func<double?, string>?)GetValue(FormatterProperty);
       set => SetValue(FormatterProperty, value);
+    }
+
+    public Color? GaugeColor
+    {
+      get => (Color?)GetValue(GaugeColorProperty);
+      set => SetValue(GaugeColorProperty, value);
     }
 
     private double IntermediateValue
@@ -113,7 +122,29 @@ namespace Tederean.Apius
           gauge.UpdateValueText();
           return;
         }
+
+        if (args.Property == IconProperty)
+        {
+          gauge.UpdateIcon();
+          return;
+        }
+
+        if (args.Property == GaugeColorProperty)
+        {
+          gauge.UpdateGaugeColor();
+          return;
+        }
       }
+    }
+
+    private void UpdateGaugeColor()
+    {
+      _foregroundPath.Stroke = GaugeColor.HasValue ? new SolidColorBrush(GaugeColor.Value) : null;
+    }
+
+    private void UpdateIcon()
+    {
+      _iconPath.Data = Icon;
     }
 
     private void UpdateValueText()

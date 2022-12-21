@@ -6,47 +6,43 @@
              xmlns:local="clr-namespace:Tederean.Apius"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100">
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="20"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+  <Grid Grid.Row="1" x:Name="_gaugeGrid">
 
-    <Label Grid.Row="0" x:Name="_titleText" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-    
-    <Grid Grid.Row="1" x:Name="_gaugeGrid">
+    <Path Stroke="DarkGray" StrokeThickness="14">
+      <Path.Data>
+        <GeometryGroup FillRule="EvenOdd">
+          <EllipseGeometry x:Name="_backgroundEllipseStart"/>
+          <PathGeometry>
+            <PathFigure x:Name="_backgroundPathFigure">
+              <ArcSegment x:Name="_backgroundArcSegment" SweepDirection="Clockwise"/>
+            </PathFigure>
+          </PathGeometry>
+          <EllipseGeometry x:Name="_backgroundEllipseEnd"/>
+        </GeometryGroup>
+      </Path.Data>
+    </Path>
 
-      <Path Stroke="DarkGray" StrokeThickness="14">
-        <Path.Data>
-          <GeometryGroup FillRule="EvenOdd">
-            <EllipseGeometry x:Name="_backgroundEllipseStart"/>
-            <PathGeometry>
-              <PathFigure x:Name="_backgroundPathFigure">
-                <ArcSegment x:Name="_backgroundArcSegment" SweepDirection="Clockwise"/>
-              </PathFigure>
-            </PathGeometry>
-            <EllipseGeometry x:Name="_backgroundEllipseEnd"/>
-          </GeometryGroup>
-        </Path.Data>
-      </Path>
+    <Path x:Name="_foregroundPath" StrokeThickness="14">
+      <Path.Data>
+        <GeometryGroup FillRule="EvenOdd">
+          <EllipseGeometry x:Name="_foregroundEllipseStart"/>
+          <PathGeometry>
+            <PathFigure x:Name="_foregroundPathFigure">
+              <ArcSegment x:Name="_foregroundArcSegment" SweepDirection="Clockwise"/>
+            </PathFigure>
+          </PathGeometry>
+          <EllipseGeometry x:Name="_foregroundEllipseEnd"/>
+        </GeometryGroup>
+      </Path.Data>
+    </Path>
 
-      <Path Stroke="Orange" StrokeThickness="14">
-        <Path.Data>
-          <GeometryGroup FillRule="EvenOdd">
-            <EllipseGeometry x:Name="_foregroundEllipseStart"/>
-            <PathGeometry>
-              <PathFigure x:Name="_foregroundPathFigure">
-                <ArcSegment x:Name="_foregroundArcSegment" SweepDirection="Clockwise"/>
-              </PathFigure>
-            </PathGeometry>
-            <EllipseGeometry x:Name="_foregroundEllipseEnd"/>
-          </GeometryGroup>
-        </Path.Data>
-      </Path>
+    <Label x:Name="_valueText" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="32" FontWeight="Bold" Foreground="LightGray"/>
 
-      <Label x:Name="_valueText" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="32" FontWeight="Bold" Foreground="LightGray"/>
+    <Viewbox Width="48" Height="48" VerticalAlignment="Bottom" Margin="0,0,0,5">
+      <Canvas Width="24" Height="24">
+        <Path Fill="LightGray" x:Name="_iconPath"/>
+      </Canvas>
+    </Viewbox>
 
-    </Grid>
-    
   </Grid>
 </UserControl>

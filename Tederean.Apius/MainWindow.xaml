@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:Tederean.Apius"
         mc:Ignorable="d"
         Background="Black"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
         Title="Apius"
         Height="480"
         Width="800">
@@ -17,7 +20,8 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="LightGray"/>
-        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="FontWeight" Value="Bold"/>
       </Style>
 
     </Grid.Resources>
@@ -37,38 +41,43 @@
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="10"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
 
-      <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CpuName}" Style="{StaticResource Title}"/>
+      <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding CpuName}" Style="{StaticResource Title}"/>
 
       <local:Gauge Grid.Row="1" Grid.Column="0"
         Minimum="{Binding Sensors.MainboardValues.Load.Minimum}"
         Maximum="{Binding Sensors.MainboardValues.Load.Maximum}"
         Value="{Binding Sensors.MainboardValues.Load.Value}"
         Formatter="{Binding LoadFormatter}"
-        Title="Auslastung"/>
+        Icon="{Binding LoadIcon}"
+        GaugeColor="{Binding GaugeColor}"/>
 
-      <local:Gauge Grid.Row="1" Grid.Column="1"
+      <local:Gauge Grid.Row="1" Grid.Column="2"
         Minimum="{Binding Sensors.MainboardValues.Wattage.Minimum}"
         Maximum="{Binding Sensors.MainboardValues.Wattage.Maximum}"
         Value="{Binding Sensors.MainboardValues.Wattage.Value}"
         Formatter="{Binding WattageFormatter}"
-        Title="Leistung"/>
+        Icon="{Binding WattageIcon}"
+        GaugeColor="{Binding GaugeColor}"/>
 
       <local:Gauge Grid.Row="2" Grid.Column="0"
         Minimum="{Binding Sensors.MainboardValues.Temperature.Minimum}"
         Maximum="{Binding Sensors.MainboardValues.Temperature.Maximum}"
         Value="{Binding Sensors.MainboardValues.Temperature.Value}"
         Formatter="{Binding TemperatureFormatter}"
-        Title="Temperatur"/>
+        Icon="{Binding TemperatureIcon}"
+        GaugeColor="{Binding GaugeColor}"/>
 
-      <local:Gauge Grid.Row="2" Grid.Column="1"
+      <local:Gauge Grid.Row="2" Grid.Column="2"
         Minimum="{Binding Sensors.MainboardValues.Memory.Minimum}"
         Maximum="{Binding Sensors.MainboardValues.Memory.Maximum}"
         Value="{Binding Sensors.MainboardValues.Memory.Value}"
         Formatter="{Binding MemoryFormatter}"
-        Title="Speicher"/>
+        Icon="{Binding MemoryIcon}"
+        GaugeColor="{Binding GaugeColor}"/>
 
     </Grid>
 
@@ -82,38 +91,43 @@
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="10"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
 
-      <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding GpuName}" Style="{StaticResource Title}"/>
+      <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="{Binding GpuName}" Style="{StaticResource Title}"/>
 
       <local:Gauge Grid.Row="1" Grid.Column="0"
         Minimum="{Binding Sensors.GraphicsCardValues.Load.Minimum}"
         Maximum="{Binding Sensors.GraphicsCardValues.Load.Maximum}"
         Value="{Binding Sensors.GraphicsCardValues.Load.Value}"
         Formatter="{Binding LoadFormatter}"
-        Title="Auslastung"/>
+        Icon="{Binding LoadIcon}"
+        GaugeColor="{Binding GaugeColor}"/>
 
-      <local:Gauge Grid.Row="1" Grid.Column="1"
+      <local:Gauge Grid.Row="1" Grid.Column="2"
         Minimum="{Binding Sensors.GraphicsCardValues.Wattage.Minimum}"
         Maximum="{Binding Sensors.GraphicsCardValues.Wattage.Maximum}"
         Value="{Binding Sensors.GraphicsCardValues.Wattage.Value}"
         Formatter="{Binding WattageFormatter}"
-        Title="Leistung"/>
+        Icon="{Binding WattageIcon}"
+        GaugeColor="{Binding GaugeColor}"/>
 
       <local:Gauge Grid.Row="2" Grid.Column="0"
         Minimum="{Binding Sensors.GraphicsCardValues.Temperature.Minimum}"
         Maximum="{Binding Sensors.GraphicsCardValues.Temperature.Maximum}"
         Value="{Binding Sensors.GraphicsCardValues.Temperature.Value}"
         Formatter="{Binding TemperatureFormatter}"
-        Title="Temperatur"/>
+        Icon="{Binding TemperatureIcon}"
+        GaugeColor="{Binding GaugeColor}"/>
 
-      <local:Gauge Grid.Row="2" Grid.Column="1"
+      <local:Gauge Grid.Row="2" Grid.Column="2"
         Minimum="{Binding Sensors.GraphicsCardValues.Memory.Minimum}"
         Maximum="{Binding Sensors.GraphicsCardValues.Memory.Maximum}"
         Value="{Binding Sensors.GraphicsCardValues.Memory.Value}"
         Formatter="{Binding MemoryFormatter}"
-        Title="Speicher"/>
+        Icon="{Binding MemoryIcon}"
+        GaugeColor="{Binding GaugeColor}"/>
 
     </Grid>
 

@@ -15,19 +15,4 @@
     <ProjectReference Include="..\Tederean.Apius.Core\Tederean.Apius.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Localisation\StringsPanel.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StringsPanel.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Localisation\StringsPanel.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>StringsPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>
