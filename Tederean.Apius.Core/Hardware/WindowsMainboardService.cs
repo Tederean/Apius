@@ -1,7 +1,5 @@
 ﻿#if WINDOWS
-#pragma warning disable CA1416 // Validate platform compatibility
 using LibreHardwareMonitor.Hardware;
-using System.Diagnostics;
 using Tederean.Apius.Extensions;
 using Tederean.Apius.Interop.Kernel32;
 
@@ -11,8 +9,6 @@ namespace Tederean.Apius.Hardware
   public class WindowsMainboardService : IMainboardService
   {
 
-    private readonly PerformanceCounter _cpuPerformanceCounter;
-
     private readonly Computer _computer;
 
     private readonly IHardware _cpu;
@@ -21,14 +17,14 @@ namespace Tederean.Apius.Hardware
 
     private readonly ISensor[] _cpuWattageSensors;
 
+    private readonly ISensor[] _cpuLoadSensors;
+
 
     public string CpuName => _cpu.Name;
 
 
     public WindowsMainboardService()
     {
-      _cpuPerformanceCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-
       _computer = new Computer()
       {
         IsBatteryEnabled = false,
@@ -48,6 +44,7 @@ namespace Tederean.Apius.Hardware
 
       _cpuTemperatureSensors = _cpu.Sensors.Where(sensor => sensor.SensorType == SensorType.Temperature).ToArray();
       _cpuWattageSensors = _cpu.Sensors.Where(sensor => sensor.SensorType == SensorType.Power && sensor.Name.StartsWith("Package")).ToArray();
+      _cpuLoadSensors = _cpu.Sensors.Where(sensor => sensor.SensorType == SensorType.Load && sensor.Name.StartsWith("CPU Total")).ToArray();
     }
 
 
@@ -56,8 +53,6 @@ namespace Tederean.Apius.Hardware
       var mainboardSensors = new MainboardSensors();
 
       GetRamValues(mainboardSensors);
-
-      GetLoadValues(mainboardSensors);
 
       GetLibreHardwareMonitorValues(mainboardSensors);
 
@@ -84,13 +79,14 @@ namespace Tederean.Apius.Hardware
       {
         mainboardSensors.Wattage = new Sensor(Unit.Power, wattageSensors.Sum(), 0.0, 105.0);
       }
-    }
 
-    private void GetLoadValues(MainboardSensors mainboardSensors)
-    {
-      var loadPercent = (double)_cpuPerformanceCounter.NextValue();
 
-      mainboardSensors.Load = new Sensor(Unit.Utilization, loadPercent * 100.0, 0.0, 100.0);
+      var loadSensors = _cpuLoadSensors.Select(sensor => sensor.Value).WhereNotNull().ToArray();
+
+      if (loadSensors.Any())
+      {
+        mainboardSensors.Load = new Sensor(Unit.Utilization, loadSensors.Average(), 0.0, 100.0);
+      }
     }
 
     private void GetRamValues(MainboardSensors mainboardSensors)

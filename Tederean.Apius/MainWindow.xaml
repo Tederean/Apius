@@ -8,7 +8,9 @@
         Background="Black"
         WindowStyle="None"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
+        WindowStartupLocation="Manual"
+        ShowInTaskbar="False"
         Title="Apius"
         Height="480"
         Width="800">
