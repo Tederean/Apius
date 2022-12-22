@@ -22,9 +22,6 @@ namespace Tederean.Apius
     private string _gpuName;
 
     [ObservableProperty]
-    private Color _gaugeColor;
-
-    [ObservableProperty]
     private Func<double?, string> _loadFormatter;
 
     [ObservableProperty]
@@ -58,8 +55,6 @@ namespace Tederean.Apius
 
       _cpuName = hardwareService.MainboardService?.CpuName ?? "Unknown CPU";
       _gpuName = hardwareService.GraphicsCardService?.GraphicsCardName ?? "Unknown GPU";
-
-      _gaugeColor = Colors.White;
 
       _loadFormatter = value => value.HasValue ? (value.Value.ToString("0") + " %") : "?";
       _wattageFormatter = value => value.HasValue ? (value.Value.ToString("0") + " W") : "?";

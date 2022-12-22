@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Tederean.Apius.Extensions;
 
 namespace Tederean.Apius
 {
@@ -17,7 +18,6 @@ namespace Tederean.Apius
     private const double FullAngle = (2 * Math.PI) - (2 * AngleOffset);
 
 
-
     public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(nameof(Minimum), typeof(double?), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
 
     public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(nameof(Maximum), typeof(double?), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
@@ -27,8 +27,6 @@ namespace Tederean.Apius
     public static readonly DependencyProperty IconProperty = DependencyProperty.Register(nameof(Icon), typeof(Geometry), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
 
     public static readonly DependencyProperty FormatterProperty = DependencyProperty.Register(nameof(Formatter), typeof(Func<double?, string>), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
-
-    public static readonly DependencyProperty GaugeColorProperty = DependencyProperty.Register(nameof(GaugeColor), typeof(Color?), typeof(Gauge), new PropertyMetadata(null, OnPropertyChanged));
 
     private static readonly DependencyProperty IntermediateValueProperty = DependencyProperty.Register(nameof(IntermediateValue), typeof(double), typeof(Gauge), new PropertyMetadata(0.0D, OnPropertyChanged));
 
@@ -62,12 +60,6 @@ namespace Tederean.Apius
     {
       get => (Func<double?, string>?)GetValue(FormatterProperty);
       set => SetValue(FormatterProperty, value);
-    }
-
-    public Color? GaugeColor
-    {
-      get => (Color?)GetValue(GaugeColorProperty);
-      set => SetValue(GaugeColorProperty, value);
     }
 
     private double IntermediateValue
@@ -128,18 +120,7 @@ namespace Tederean.Apius
           gauge.UpdateIcon();
           return;
         }
-
-        if (args.Property == GaugeColorProperty)
-        {
-          gauge.UpdateGaugeColor();
-          return;
-        }
       }
-    }
-
-    private void UpdateGaugeColor()
-    {
-      _foregroundPath.Stroke = GaugeColor.HasValue ? new SolidColorBrush(GaugeColor.Value) : null;
     }
 
     private void UpdateIcon()
@@ -164,7 +145,7 @@ namespace Tederean.Apius
       if (_gaugeGrid.ActualWidth <= 0 || _gaugeGrid.ActualHeight <= 0)
         return;
 
-      (var startpoint, var size, var isLargeArc, var endpoint) = Calculate(_gaugeGrid.ActualWidth, _gaugeGrid.ActualHeight, 100.0);
+      (var startpoint, var size, var isLargeArc, var endpoint) = Calculate(_gaugeGrid.ActualWidth, _gaugeGrid.ActualHeight, 1.0);
 
       _backgroundEllipseStart.Center = startpoint;
 
@@ -181,11 +162,13 @@ namespace Tederean.Apius
       if (_gaugeGrid.ActualWidth <= 0 || _gaugeGrid.ActualHeight <= 0 || Minimum == null || Maximum == null)
         return;
 
-      var percentage = 100.0 * (IntermediateValue - Minimum.Value) / (Maximum.Value - Minimum.Value);
+      var ratio = IntermediateValue.Map(Minimum.Value, Maximum.Value, 0.0, 1.0);
 
-      percentage = Math.Clamp(percentage, 0.0, 100.0);
+      ratio = Math.Clamp(ratio, 0.0, 1.0);
 
-      (var startpoint, var size, var isLargeArc, var endpoint) = Calculate(_gaugeGrid.ActualWidth, _gaugeGrid.ActualHeight, percentage);
+      (var startpoint, var size, var isLargeArc, var endpoint) = Calculate(_gaugeGrid.ActualWidth, _gaugeGrid.ActualHeight, ratio);
+
+      var gaugeColor = GetGaugeColor(ratio);
 
       _foregroundEllipseStart.Center = startpoint;
 
@@ -195,10 +178,21 @@ namespace Tederean.Apius
       _foregroundArcSegment.Point = endpoint;
 
       _foregroundEllipseEnd.Center = endpoint;
+
+      _foregroundPath.Stroke = gaugeColor;
     }
 
+    private Brush GetGaugeColor(double ratio)
+    {
+      var hue = ratio < 0.7 ? 120 : (int)Math.Round(ratio.Map(0.7, 1.0, 120.0, 0.0));
 
-    private (Point Startpoint, Size Size, bool IsLargeArc, Point Endpoint) Calculate(double actualWidth, double actualHeight, double percentage)
+      var hsl = new ColorHelper.HSL(hue, 100, 50);
+      var rgb = ColorHelper.ColorConverter.HslToRgb(hsl);
+
+      return new SolidColorBrush(Color.FromRgb(rgb.R, rgb.G, rgb.B));
+    }
+
+    private (Point Startpoint, Size Size, bool IsLargeArc, Point Endpoint) Calculate(double actualWidth, double actualHeight, double ration)
     {
       var center = new Point(actualWidth / 2.0, actualHeight / 2.0);
       var radius = Math.Min(center.X, center.Y) - (Math.Min(center.X, center.Y) / 10.0);
@@ -208,14 +202,14 @@ namespace Tederean.Apius
         (Math.Cos(AngleCoordinateRotation - AngleOffset) * radius + center.X,
         (-Math.Sin(AngleCoordinateRotation - AngleOffset) * radius) + center.Y);
 
-      var backgroundEndPoint = CalculateEndpoint(percentage, center, radius);
+      var backgroundEndPoint = CalculateEndpoint(ration, center, radius);
 
       return (startPoint, size, backgroundEndPoint.IsLargeArc, backgroundEndPoint.Endpoint);
     }
 
-    private (Point Endpoint, bool IsLargeArc) CalculateEndpoint(double percentage, Point middle, double radius)
+    private (Point Endpoint, bool IsLargeArc) CalculateEndpoint(double ratio, Point middle, double radius)
     {
-      var angle = (percentage / 100.0) * FullAngle;
+      var angle = ratio * FullAngle;
       var isLargeArc = angle > Math.PI;
 
       angle = AngleCoordinateRotation - AngleOffset - angle;

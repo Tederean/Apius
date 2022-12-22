@@ -1,10 +1,12 @@
-﻿namespace Tederean.Apius.Extensions
+﻿using System.Numerics;
+
+namespace Tederean.Apius.Extensions
 {
 
   public static class MathExtensions
   {
 
-    public static double Map(this double inputValue, double inputMinimum, double inputMaximum, double outputMinimum, double outputMaximum)
+    public static T Map<T>(this T inputValue, T inputMinimum, T inputMaximum, T outputMinimum, T outputMaximum) where T : INumber<T>
     {
       return (inputValue - inputMinimum) * (outputMaximum - outputMinimum) / (inputMaximum - inputMinimum) + outputMinimum;
     }

@@ -54,32 +54,28 @@
         Maximum="{Binding Sensors.MainboardValues.Load.Maximum}"
         Value="{Binding Sensors.MainboardValues.Load.Value}"
         Formatter="{Binding LoadFormatter}"
-        Icon="{Binding LoadIcon}"
-        GaugeColor="{Binding GaugeColor}"/>
+        Icon="{Binding LoadIcon}"/>
 
       <local:Gauge Grid.Row="1" Grid.Column="2"
         Minimum="{Binding Sensors.MainboardValues.Wattage.Minimum}"
         Maximum="{Binding Sensors.MainboardValues.Wattage.Maximum}"
         Value="{Binding Sensors.MainboardValues.Wattage.Value}"
         Formatter="{Binding WattageFormatter}"
-        Icon="{Binding WattageIcon}"
-        GaugeColor="{Binding GaugeColor}"/>
+        Icon="{Binding WattageIcon}"/>
 
       <local:Gauge Grid.Row="2" Grid.Column="0"
         Minimum="{Binding Sensors.MainboardValues.Temperature.Minimum}"
         Maximum="{Binding Sensors.MainboardValues.Temperature.Maximum}"
         Value="{Binding Sensors.MainboardValues.Temperature.Value}"
         Formatter="{Binding TemperatureFormatter}"
-        Icon="{Binding TemperatureIcon}"
-        GaugeColor="{Binding GaugeColor}"/>
+        Icon="{Binding TemperatureIcon}"/>
 
       <local:Gauge Grid.Row="2" Grid.Column="2"
         Minimum="{Binding Sensors.MainboardValues.Memory.Minimum}"
         Maximum="{Binding Sensors.MainboardValues.Memory.Maximum}"
         Value="{Binding Sensors.MainboardValues.Memory.Value}"
         Formatter="{Binding MemoryFormatter}"
-        Icon="{Binding MemoryIcon}"
-        GaugeColor="{Binding GaugeColor}"/>
+        Icon="{Binding MemoryIcon}"/>
 
     </Grid>
 
@@ -104,32 +100,28 @@
         Maximum="{Binding Sensors.GraphicsCardValues.Load.Maximum}"
         Value="{Binding Sensors.GraphicsCardValues.Load.Value}"
         Formatter="{Binding LoadFormatter}"
-        Icon="{Binding LoadIcon}"
-        GaugeColor="{Binding GaugeColor}"/>
+        Icon="{Binding LoadIcon}"/>
 
       <local:Gauge Grid.Row="1" Grid.Column="2"
         Minimum="{Binding Sensors.GraphicsCardValues.Wattage.Minimum}"
         Maximum="{Binding Sensors.GraphicsCardValues.Wattage.Maximum}"
         Value="{Binding Sensors.GraphicsCardValues.Wattage.Value}"
         Formatter="{Binding WattageFormatter}"
-        Icon="{Binding WattageIcon}"
-        GaugeColor="{Binding GaugeColor}"/>
+        Icon="{Binding WattageIcon}"/>
 
       <local:Gauge Grid.Row="2" Grid.Column="0"
         Minimum="{Binding Sensors.GraphicsCardValues.Temperature.Minimum}"
         Maximum="{Binding Sensors.GraphicsCardValues.Temperature.Maximum}"
         Value="{Binding Sensors.GraphicsCardValues.Temperature.Value}"
         Formatter="{Binding TemperatureFormatter}"
-        Icon="{Binding TemperatureIcon}"
-        GaugeColor="{Binding GaugeColor}"/>
+        Icon="{Binding TemperatureIcon}"/>
 
       <local:Gauge Grid.Row="2" Grid.Column="2"
         Minimum="{Binding Sensors.GraphicsCardValues.Memory.Minimum}"
         Maximum="{Binding Sensors.GraphicsCardValues.Memory.Maximum}"
         Value="{Binding Sensors.GraphicsCardValues.Memory.Value}"
         Formatter="{Binding MemoryFormatter}"
-        Icon="{Binding MemoryIcon}"
-        GaugeColor="{Binding GaugeColor}"/>
+        Icon="{Binding MemoryIcon}"/>
 
     </Grid>
 
