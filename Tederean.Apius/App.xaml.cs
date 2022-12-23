@@ -28,16 +28,13 @@ namespace Tederean.Apius
           var viewModel = new MainWindowViewModel(hardwareService);
           var window = new MainWindow(viewModel);
 
-     
-          var suitableScreen = Screen.AllScreens.FirstOrDefault(screen => !screen.Primary && screen.WpfBounds.Height < 700 && screen.WpfBounds.Width < 1000);
 
-          if (suitableScreen != null)
-          {
-            window.Left = suitableScreen.WpfBounds.Left;
-            window.Top = suitableScreen.WpfBounds.Top;
-            window.Width = suitableScreen.WpfBounds.Width;
-            window.Height = suitableScreen.WpfBounds.Height;
-          }
+          var screen = Screen.AllScreens.FirstOrDefault(screen => !screen.Primary && screen.WpfBounds.Height < 700 && screen.WpfBounds.Width < 1000) ?? Screen.AllScreens.First();
+
+          window.Left = screen.WpfBounds.Left;
+          window.Top = screen.WpfBounds.Top;
+          window.Width = screen.WpfBounds.Width;
+          window.Height = screen.WpfBounds.Height;
 
 
           MainWindow = window;
