@@ -70,6 +70,10 @@ namespace Tederean.Apius
       {
         MessageBox.Show(ex.ToString());
       }
+      finally
+      {
+        Shutdown();
+      }
     }
   }
 }
