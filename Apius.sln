@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tederean.Apius", "Tederean.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tederean.Apius.Core", "Tederean.Apius.Core\Tederean.Apius.Core.csproj", "{97B7247E-503A-41CB-9F68-43E40B07937C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibreHardwareMonitorLib", "..\LibreHardwareMonitor\LibreHardwareMonitorLib\LibreHardwareMonitorLib.csproj", "{A4CA7C63-6B2A-45F9-A92B-FCDBED819241}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{97B7247E-503A-41CB-9F68-43E40B07937C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97B7247E-503A-41CB-9F68-43E40B07937C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97B7247E-503A-41CB-9F68-43E40B07937C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4CA7C63-6B2A-45F9-A92B-FCDBED819241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4CA7C63-6B2A-45F9-A92B-FCDBED819241}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4CA7C63-6B2A-45F9-A92B-FCDBED819241}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4CA7C63-6B2A-45F9-A92B-FCDBED819241}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
