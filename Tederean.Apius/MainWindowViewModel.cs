@@ -1,25 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Win32;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Tederean.Apius.Formating;
 using Tederean.Apius.Hardware;
+using Tederean.Apius.Extensions;
 
 namespace Tederean.Apius
 {
   
   public partial class MainWindowViewModel : ObservableObject
   {
-
-    private readonly IHardwareService _hardwareService;
-
-
-    [ObservableProperty]
-    private string _cpuName;
-
-    [ObservableProperty]
-    private string _gpuName;
 
     [ObservableProperty]
     private Func<double?, string> _loadFormatter;
@@ -46,16 +39,17 @@ namespace Tederean.Apius
     private Geometry _memoryIcon;
 
     [ObservableProperty]
+    private string? _cpuName;
+
+    [ObservableProperty]
+    private string? _gpuName;
+
+    [ObservableProperty]
     private HardwareSensors? _sensors;
 
 
-    public MainWindowViewModel(IHardwareService hardwareService)
+    public MainWindowViewModel()
     {
-      _hardwareService = hardwareService;
-
-      _cpuName = hardwareService.MainboardService?.CpuName ?? "Unknown CPU";
-      _gpuName = hardwareService.GraphicsCardService?.GraphicsCardName ?? "Unknown GPU";
-
       _loadFormatter = value => value.HasValue ? (value.Value.ToString("0") + " %") : "?";
       _wattageFormatter = value => value.HasValue ? (value.Value.ToString("0") + " W") : "?";
       _temperatureFormatter = value => value.HasValue ? (value.Value.ToString("0") + " °C") : "?";
@@ -68,20 +62,72 @@ namespace Tederean.Apius
     }
 
 
-    public async Task RunAsync(CancellationTokenSource cancellationTokenSource)
+    public async Task RunAsync(CancellationTokenSource cancellationTokenSourceApp)
     {
-      while (!cancellationTokenSource.IsCancellationRequested)
-      {
-        try
-        {
-          await Task.Delay(1000, cancellationTokenSource.Token);
-        }
-        catch (TaskCanceledException)
-        {
-          continue;
-        }
+      var powerMode = PowerModes.Resume;
 
-        Sensors = _hardwareService.GetHardwareInfo();
+      while (!cancellationTokenSourceApp.IsCancellationRequested)
+      {
+        using (var cancellationTokenSourceSuspend = new CancellationTokenSource())
+        {
+          void OnPowerModeChangedInternal(object sender, PowerModeChangedEventArgs args)
+          {
+            if (args.Mode == PowerModes.StatusChange)
+              return;
+
+            powerMode = args.Mode;
+            cancellationTokenSourceSuspend.Cancel();
+          }
+
+          SystemEvents.PowerModeChanged += OnPowerModeChangedInternal;
+
+          try
+          {
+            using (var cancellationTokenSourceLinked = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSourceApp.Token, cancellationTokenSourceSuspend.Token))
+            {
+              if (powerMode == PowerModes.Resume)
+              {
+                await RunSensorsAsync(cancellationTokenSourceLinked);
+              }
+
+              else if (powerMode == PowerModes.Suspend)
+              {
+                try
+                {
+                  await cancellationTokenSourceLinked.Token;
+                }
+                catch (OperationCanceledException) { }
+              }
+            }
+          }
+          finally
+          {
+            SystemEvents.PowerModeChanged -= OnPowerModeChangedInternal;
+          }
+        }
+      }
+    }
+
+    private async Task RunSensorsAsync(CancellationTokenSource cancellationTokenSource)
+    {
+      using (var hardwareService = (IHardwareService)new HardwareService())
+      {
+        CpuName = hardwareService.MainboardService?.CpuName ?? "Unknown CPU";
+        GpuName = hardwareService.GraphicsCardService?.GraphicsCardName ?? "Unknown GPU";
+
+        while (!cancellationTokenSource.IsCancellationRequested)
+        {
+          try
+          {
+            await Task.Delay(1000, cancellationTokenSource.Token);
+          }
+          catch (TaskCanceledException)
+          {
+            continue;
+          }
+
+          Sensors = hardwareService.GetHardwareInfo();
+        }
       }
     }
   }

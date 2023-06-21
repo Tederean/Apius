@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
-using Tederean.Apius.Hardware;
 using Tederean.Apius.Interop;
 using Tederean.Apius.Extensions;
 using WpfScreenHelper;
@@ -22,10 +21,9 @@ namespace Tederean.Apius
 
         NativeLibraryResolver.Initialize();
 
-        using (var hardwareService = new HardwareService())
         using (var cancellationTokenSource = new CancellationTokenSource())
         {
-          var viewModel = new MainWindowViewModel(hardwareService);
+          var viewModel = new MainWindowViewModel();
           var window = new MainWindow(viewModel);
 
 
