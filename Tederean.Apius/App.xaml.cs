@@ -5,6 +5,7 @@ using Tederean.Apius.Interop;
 using Tederean.Apius.Extensions;
 using WpfScreenHelper;
 using System.Linq;
+using Microsoft.Win32;
 
 namespace Tederean.Apius
 {
@@ -26,14 +27,7 @@ namespace Tederean.Apius
           var viewModel = new MainWindowViewModel();
           var window = new MainWindow(viewModel);
 
-
-          var screen = Screen.AllScreens.FirstOrDefault(screen => !screen.Primary && screen.WpfBounds.Height < 700 && screen.WpfBounds.Width < 1000) ?? Screen.AllScreens.First();
-
-          window.Left = screen.WpfBounds.Left;
-          window.Top = screen.WpfBounds.Top;
-          window.Width = screen.WpfBounds.Width;
-          window.Height = screen.WpfBounds.Height;
-
+          ApplyWindowDimensions(window);
 
           MainWindow = window;
           MainWindow.Show();
@@ -49,7 +43,13 @@ namespace Tederean.Apius
             cancellationTokenSource.Cancel();
           }
 
+          void OnDisplaySettingsChanged(object? sender, EventArgs args)
+          {
+            ApplyWindowDimensions(window);
+          }
 
+
+          SystemEvents.DisplaySettingsChanged += OnDisplaySettingsChanged;
           SessionEnding += OnAppSessionEndingInternal;
           window.Closed += OnWindowClosedInternal;
 
@@ -59,6 +59,7 @@ namespace Tederean.Apius
           }
           finally
           {
+            SystemEvents.DisplaySettingsChanged -= OnDisplaySettingsChanged;
             SessionEnding -= OnAppSessionEndingInternal;
             window.Closed -= OnWindowClosedInternal;
           }
@@ -72,6 +73,16 @@ namespace Tederean.Apius
       {
         Shutdown();
       }
+    }
+
+    private void ApplyWindowDimensions(Window window)
+    {
+      var screen = Screen.AllScreens.FirstOrDefault(screen => !screen.Primary && screen.WpfBounds.Height < 700 && screen.WpfBounds.Width < 1000) ?? Screen.AllScreens.First();
+
+      window.Left = screen.WpfBounds.Left;
+      window.Top = screen.WpfBounds.Top;
+      window.Width = screen.WpfBounds.Width;
+      window.Height = screen.WpfBounds.Height;
     }
   }
 }
