@@ -77,12 +77,21 @@ namespace Tederean.Apius
 
     private void ApplyWindowDimensions(Window window)
     {
-      var screen = Screen.AllScreens.FirstOrDefault(screen => !screen.Primary && screen.WpfBounds.Height < 700 && screen.WpfBounds.Width < 1000) ?? Screen.AllScreens.First();
+      var screen = Screen.AllScreens.FirstOrDefault(screen => !screen.Primary && screen.WpfBounds.Height < 700 && screen.WpfBounds.Width < 1000);
 
-      window.Left = screen.WpfBounds.Left;
-      window.Top = screen.WpfBounds.Top;
-      window.Width = screen.WpfBounds.Width;
-      window.Height = screen.WpfBounds.Height;
+      if (screen != null)
+      {
+        window.Topmost = true;
+        window.Left = screen.WpfBounds.Left;
+        window.Top = screen.WpfBounds.Top;
+        window.Width = screen.WpfBounds.Width;
+        window.Height = screen.WpfBounds.Height;
+        window.Show();
+      }
+      else
+      {
+        window.Hide();
+      }
     }
   }
 }
